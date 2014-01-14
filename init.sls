@@ -1,3 +1,11 @@
+nginx_repo_key:
+  cmd.script:
+    - source: salt://nginx/add_nginx_repo_key.sh
+    - unless: apt-key list | grep 7BD9BF62 >/dev/null
+    - require_in:
+      - pkgrepo: nginx_bin_repo
+      - pkgrepo: nginx_src_repo
+
 nginx_bin_repo:
   pkgrepo.managed:
     - humanname: Official Nginx Repo
